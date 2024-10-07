@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"
+    />
+    <title>MTR Train Schedule</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="language-select-container">
+        <label for="language-select">Choose Language:</label>
+        <select id="language-select">
+          <option value="EN">EN</option>
+          <option value="TC">中文</option>
+        </select>
+      </div>
+
+      <h1>MTR Schedule</h1>
+
+      <div class="lines-container">
+        <h2>Select a Line</h2>
+        <div class="lines"></div>
+      </div>
+
+      <div class="schedule-container">
+        <div class="last-updated-time"></div>
+        <div class="loading hide">Loading...</div>
+        <div class="trains-container"></div>
+      </div>
+    </div>
+
+    <!-- Templates -->
+    <template id="template-line">
+      <button class="line">
+        <span></span>
+      </button>
+    </template>
+
+    <template id="template-trains-direction">
+      <div class="direction">
+        <h3 class="title"></h3>
+        <div class="trains"></div>
+      </div>
+    </template>
+
+    <template id="template-train">
+      <div class="train">
+        <div class="name"></div>
+        <div class="destination">終點站: <span></span></div>
+        <div class="platform">月台: <span></span></div>
+        <div class="time">下班列車: <span></span></div>
+      </div>
+    </template>
+  </body>
+</html>

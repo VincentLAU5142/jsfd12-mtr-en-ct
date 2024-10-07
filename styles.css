@@ -1,0 +1,172 @@
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 20px;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  width: 100%;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1,
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.lines-container {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.lines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.line {
+  background-color: white;
+  border: 2px solid;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.line:hover,
+.line.active {
+  background-color: var(--color);
+  color: white;
+}
+.line:hover {
+  opacity: 0.8;
+}
+
+.line.active {
+  font-weight: bold;
+}
+
+.loading {
+  font-style: italic;
+  color: #666;
+}
+
+.hide {
+  display: none;
+}
+
+.last-updated-time {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.direction {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.direction .title {
+  font-size: 1.2em;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.trains {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  justify-content: center;
+}
+.train {
+  background-color: var(--color);
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.train .name {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.train .destination,
+.train .platform,
+.train .time {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.container.language-select-container {
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  .line {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .trains {
+    grid-template-columns: 1fr;
+  }
+
+  .train {
+    padding: 8px;
+  }
+
+  .train .name {
+    font-size: 14px;
+  }
+
+  .train .destination,
+  .train .platform,
+  .train .time {
+    font-size: 11px;
+  }
+}
+.language-select-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.language-select-container label {
+  display: none;
+}
