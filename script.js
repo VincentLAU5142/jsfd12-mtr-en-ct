@@ -196,12 +196,12 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   /*  fetch API */
-  renderLines();
+  displayMTRLines();
 
-  function renderLines() {
+  function displayMTRLines() {
     const area = document.querySelector(".lines");
     const language = languageSelect.value;
-    area.innerHTML = ""; // Clear existing lines
+    area.innerHTML = "";
 
     for (const lineCode in mtrLines) {
       const line = mtrLines[lineCode];
@@ -211,13 +211,13 @@ document.addEventListener("DOMContentLoaded", function () {
       elem.style.setProperty("--color", line.color);
       elem.style.borderColor = line.color;
       elem.dataset.lineCode = lineCode;
-      elem.addEventListener("click", selectLine);
+      elem.addEventListener("click", chooseLineAndFetchData);
 
       area.appendChild(elem);
     }
   }
 
-  async function selectLine(event) {
+  async function chooseLineAndFetchData(event) {
     const lineElem = event.currentTarget;
     const lineCode = lineElem.dataset.lineCode;
     const line = mtrLines[lineCode];
@@ -234,10 +234,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     try {
       console.log(`Fetching data for line: ${lineCode}`);
-      const data = await fetchApiData(lineCode, language);
+      const data = await retrieveApiData(lineCode, language);
       console.log("Fetched data:", data);
       if (data && Object.keys(data).length > 0) {
-        renderTrains(data, lineCode, line, language);
+        displayTrainInfo(data, lineCode, line, language);
       } else {
         console.error(`No data available for line ${lineCode}`);
         trainsContainer.innerHTML = "<p>No data available for this line.</p>";
@@ -250,7 +250,7 @@ document.addEventListener("DOMContentLoaded", function () {
       document.querySelector(".loading").classList.add("hide");
     }
   }
-  function renderTrains(data, lineCode, line, language) {
+  function displayTrainInfo(data, lineCode, line, language) {
     console.log(`Rendering trains for line: ${lineCode}`);
     const trainsContainer = document.querySelector(".trains-container");
     trainsContainer.innerHTML = "";
@@ -292,7 +292,7 @@ document.addEventListener("DOMContentLoaded", function () {
           stationData[direction.toUpperCase()].length > 0
         ) {
           const trainInfo = stationData[direction.toUpperCase()][0];
-          const trainElem = renderTrain(
+          const trainElem = createTrainElement(
             trainInfo,
             station,
             lineCode,
@@ -311,7 +311,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }: ${data.curr_time || new Date().toLocaleString()}`;
   }
 
-  function renderTrain(trainInfo, station, lineCode, color, language) {
+  function createTrainElement(trainInfo, station, lineCode, color, language) {
     const elem = cloneFromTemplate("template-train");
     elem.style.setProperty("--color", color);
 
@@ -322,12 +322,14 @@ document.addEventListener("DOMContentLoaded", function () {
       language
     );
     elem.querySelector(".platform span").textContent = trainInfo.plat;
-    elem.querySelector(".time span").textContent = formatTime(trainInfo.time);
+    elem.querySelector(".time span").textContent = formatTimeString(
+      trainInfo.time
+    );
 
     return elem;
   }
 
-  function formatTime(timeString) {
+  function formatTimeString(timeString) {
     const time = new Date(timeString);
     return `${time.getHours()}:${String(time.getMinutes()).padStart(2, "0")}`;
   }
@@ -345,7 +347,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return template.content.cloneNode(true).children[0];
   }
 
-  async function fetchApiData(line, language) {
+  async function retrieveApiData(line, language) {
     try {
       const allStationData = {};
       for (const station of mtrLines[line].sta) {
@@ -393,10 +395,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   languageSelect.addEventListener("change", function () {
-    renderLines();
+    displayMTRLines();
     const activeLineElem = document.querySelector(".line.active");
     if (activeLineElem) {
-      selectLine({ currentTarget: activeLineElem });
+      chooseLineAndFetchData({ currentTarget: activeLineElem });
     }
   });
 });
